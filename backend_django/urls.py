@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from patients.views import PatientViewSet, LogViewSet
+from patients.views import PatientViewSet, LogViewSet, validate_patient
 
 router = DefaultRouter()
 
@@ -28,6 +28,8 @@ router.register(r'logs', LogViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api/validate/<str:email>/', validate_patient, name="validate_patient")
+    
 ]
 
 
