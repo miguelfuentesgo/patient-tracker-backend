@@ -17,13 +17,14 @@ class LogViewSet(viewsets.ModelViewSet):
 
 @api_view(['GET'])
 def validate_patient(request, email):
-    url = f'https://randomuser.me/api/?email={email}'
+    url = f'http://localhost:9000/api/check-email/?email={email}'
+    print(url)
     response = requests.get(url)
 
     if response.status_code == 200:
         data = response.json()
-        if len(data.get("results", [])) > 0:
-            return JsonResponse({"exists": True, "data": data["results"][0]})
+        if data.get("exists"):
+            return JsonResponse({"exists": True })
         else:
             return JsonResponse({"exists": False})
     else:
